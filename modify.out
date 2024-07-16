@@ -1,0 +1,7 @@
+./utls/18_align_overlap.sh:$masterpath/exonerate/exonerate \
+./utls/09_merge.SR.PE.support.sh:sort -k1,1 -k2,3n  $2/$3/$4/$1.$4.merge.bed | \
+./utls/19_merge.SR.PE.support.sh:sort -k1,1 -k2,3n  $2/$3/$4/$1.$4.merge50.bed | \
+./utls/02_depth_zero.sh:   sort -k1,1 -k2,3n | sort -u \
+./LINE/00_remap/03_remap.NN.sh:exonerate \
+./LINE/00_remap/05_remap.NNNN.sh:exonerate \
+./LINE/00_remap/04_remap.NNN.sh:exonerate \

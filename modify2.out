@@ -1,0 +1,7 @@
+./ALU/01_PE_matrix/01_AluPE_matrix.pl:system("exonerate --model affine:local --bestn 1 --ryo \"INFO: %qi %qal %pi %tS %ti %qab %qae %tab %tae %qs\\n\" $fasta_temp $ref_file > $exo_temp");
+./ALU/05_Pairing/02_pairs.pl:    system("exonerate --model affine:local --ryo \"INFO: %qi %qal %pi %tS %ti %qab %qae %tab %tae %s\\n\" $read1_file $read2_file | grep INFO >> $align_file");
+./RetroSeq/retroseq.prun.pl:            system("exonerate --model affine:local --bestn 5 --ryo \"INFO: %qi %qal %pi %tS %ti %qab %qae %tab %tae %qs\\n\" $candidatesFasta $refsFasta --querychunkid $i --querychunktotal 10 > ./exonerate.PE$i.out");
+./utls/00_GroupItoV.pl:system("exonerate --model affine:local --bestn 1 --ryo \"INFO: %qi %qal %pi %tS %ti %ql %qab %qae %tab %tae %tas %qas %qs\\n\" $clipFasta $refsFasta > $exo_file"); 
+./LINE/01_PE_matrix/01_L1PE_matrix.pl:system("exonerate --model affine:local --bestn 1 --ryo \"INFO: %qi %qal %pi %tS %ti %qab %qae %tab %tae %qs\\n\" $fasta_temp $ref_file > $exo_temp");
+./LINE/05_Pairing/02_pairs.pl:       #system("exonerate --bestn 1 --model affine:local --ryo \"INFO: %qi %qal %pi %tS %ti %qab %qae %tab %tae %tas\\n\" $temp_file1 $temp_file2 | grep INFO > $algn_file");
+/LINE/03_SR_matrix/01_L1SR_matrix.pl:system ("sort -k1,1 -k2,3n $temp1_file | closestBed -d -t first -a stdin -b $cleavage_file > $pAT_file");
