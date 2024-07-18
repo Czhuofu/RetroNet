@@ -51,7 +51,7 @@ source /opt/miniconda3/bin/activate RetroSom
 #echo $4  ### reference genome hg19 G37 hg38... ###
 #echo $5 ##strandness ###
 sub=$subject\_Combined
-sub2=$subject\_
+sub2=$subject\-
 startlib=1
 
 TE=LINE
