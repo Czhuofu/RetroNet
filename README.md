@@ -2,7 +2,7 @@
 ## Installation instructions
 Basically, all the files were storage in the GITHUB.
 Due to GitHub's file size restrictions, some large files/folder have been placed in Google Drive. You should download them from the link below and place them in the corresponding location.
-For example, set the directory you download the RetroSomV2 as $yourdownloadpath
+For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
 
 1. [RetroNet.sif](https://drive.google.com/file/d/1OwZvYDdvbTUrQXMidWQkYp9vbx8YjFrQ/view?usp=sharing) : Move to $yourdownloadpath/pipeline/
 2. [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : Move to $yourdownloadpath/RetroVis/
@@ -15,62 +15,62 @@ For example, set the directory you download the RetroSomV2 as $yourdownloadpath
 
 
 ### Usage
-This pipeline is divided into two parts, Singularity_Slurm_RetroSomV2.6.sh, including steps 1-6 in the workflow above; and Singularity_Slurm-RetroSom.step2.sh, which includes Step7-8 in the workflow above.
+This pipeline is divided into two parts, you can run Singularity_Slurm_RetroNet_step1.sh and Singularity_Slurm_RetroNet_step2.sh to finish the analysis process.
 The input file for this pipeline is a Bam file. If the size of the Bam file you input is greater than 200G, please split it and name it with a suffix of - and a number.
 
 For example: bigbam.bam &rarr; bigbam-1.bam bigbam-2.bam bigbam-3.bam ... (start from 1)
 Recommend using samtools split for split. If you only have one Bam file, please also add the -1 suffix to the bam file.
+Now, the pipeline only support hg38.
 
 ### Analyze control first 
 
 ```
-$yourdownloadpath/Singularity_Slurm_RetroSomV2.6.sh \
+$yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
 
    -o /directory_path_for_output \
 
-   -i ControlID \
+   -j ControlID \
 
    -m $yourdownloadpath \
 
-   -r 1 \
+   -v 3 (version control for RetroSom, default 3) \
 
-   -g b37 (default hg38, supporting hg38, hg19 and b37)\
+   -g hg38 (default hg38, supporting hg38, hg19 and b37)\
 
-   -t 3 \
+   -p your_slurm_partition_name \
 
-   -c /ControlID.bam \
+   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
 
-   -n 150 (maximum number of supporting reads to be considered as a putative soamtic insertion) \
+   -b /ControlID.bam \
 
-   -p 0.1 p_value cutoff (default p<0.1) \
+   -c anaconda3 \
 
-   -e ControlID
+   -n 100 (maximum number of supporting reads analysis at a time, default 100) 
+
 ```
 
 **Then run the step2 to merge the result of Control:**
 
 ```
-$yourdownloadpath/Singularity_Slurm_RetroSom.step2.sh \
+$yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
   
    -o /directory_path_for_output \
   
-   -i ControlID \
+   -j ControlID \
   
    -m $yourdownloadpath \
   
-   -r 1 \
+   -v 3 (version control for RetroSom, default 3) \
   
-   -g b37 (default hg38, supporting hg38, hg19 and b37) \
+   -g hg38 (default hg38, supporting hg38, hg19 and b37) \
   
-   -t 0 \
+   -p your_slurm_partition_name \
   
-   -c /ControlID.bam \
+   -c ControlID \
   
-   -n 150 (maximum number of supporting reads to be considered as a putative soamtic insertion) \
+   -z "N" (gpu_partition name, default "N") \
   
-   -p 0.1 p_value cutoff (default p<0.1) \
-   
-   -e ControlID \
+   -x 0.99 ( probability cutoff default 0.99) \
   
    -l 1 (number of bam you split)
 ```
@@ -80,55 +80,54 @@ $yourdownloadpath/Singularity_Slurm_RetroSom.step2.sh \
 **Please ensure that the case and control use the same output path.**
 
 ```
-$yourdownloadpath/Singularity_Slurm_RetroSomV2.6.sh \
+$yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
 
    -o /directory_path_for_output \
 
-   -i CaseID \
+   -j CaseID \
 
    -m $yourdownloadpath \
 
-   -r 1 \
+   -v 3 (version control for RetroSom, default 3) \
 
-   -g b37 (default hg38, supporting hg38, hg19 and b37)\
+   -g hg38 (default hg38, supporting hg38, hg19 and b37)\
 
-   -t 3 \
+   -p your_slurm_partition_name \
 
-   -c /CaseID.bam \
+   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
 
-   -n 150 (maximum number of supporting reads to be considered as a putative soamtic insertion) \
+   -b /CaseID.bam \
 
-   -p 0.1 p_value cutoff (default p<0.1) \
+   -c anaconda3 \
 
-   -e ControlID_NoModel
+   -n 100 (maximum number of supporting reads analysis at a time, default 100) 
+
 ```
 
 **Then run the step2 to merge the result of Case:**
 
 ```
-$yourdownloadpath/Singularity_Slurm_RetroSom.step2.sh \
+$yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
   
    -o /directory_path_for_output \
   
-   -i CaseID \
+   -j CaseID \
   
    -m $yourdownloadpath \
   
-   -r 1 \
+   -v 3 (version control for RetroSom, default 3) \
   
-   -g b37 (default hg38, supporting hg38, hg19 and b37) \
+   -g hg38 (default hg38, supporting hg38, hg19 and b37) \
   
-   -t 0 \
+   -p your_slurm_partition_name \
   
-   -c /CaseID.bam \
+   -c ControlID_Combined \
   
-   -n 150 (maximum number of supporting reads to be considered as a putative soamtic insertion) \
+   -z "N" (gpu_partition name, default "N") \
   
-   -p 0.1 p_value cutoff (default p<0.1) \
-   
-   -e ControlID_NoModel \
+   -x 0.99 ( probability cutoff default 0.99) \
   
    -l 1 (number of bam you split)
 ```
 
-A folder called CaseID_NoModel will be generated, result svg will be in CaseID_NoModel/visual/
+A folder called CaseID_NoModel will be generated, there will be three kinds of output, the primary probability will be in CaseID_NoModel/RetroNet; the bed files for detailed MEI information will be in CaseID_NoModel/retro_v3; result svg will be in CaseID_NoModel/visual/
