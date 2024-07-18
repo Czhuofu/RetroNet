@@ -40,7 +40,7 @@ done
 source /opt/miniconda3/bin/activate RetroSom
 
 sub=$subject\_Combined
-sub2=$subject\_
+sub2=$subject\-
 startlib=1
 
 ### combine the anchor ###
