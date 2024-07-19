@@ -15,7 +15,7 @@ For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
 
 
 ### Usage
-This pipeline is divided into two parts, you can run Singularity_Slurm_RetroNet_step1.sh and Singularity_Slurm_RetroNet_step2.sh to finish the analysis process.
+This pipeline is divided into two steps, you can run Singularity_Slurm_RetroNet_step1.sh and Singularity_Slurm_RetroNet_step2.sh to finish the analysis process.
 The input file for this pipeline is a Bam file. If the size of the Bam file you input is greater than 200G, please split it and name it with a suffix of - and a number.
 
 For example: bigbam.bam &rarr; bigbam-1.bam bigbam-2.bam bigbam-3.bam ... (start from 1)
@@ -130,4 +130,4 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
    -l 1 (number of bam you split)
 ```
 
-A folder called CaseID_NoModel will be generated, there will be three kinds of output, the primary probability will be in CaseID_NoModel/RetroNet; the bed files for detailed MEI information will be in CaseID_NoModel/retro_v3; result svg will be in CaseID_NoModel/visual/
+A folder called CaseID_NoModel will be generated, there will be three kinds of output, the probability for each MEI will be in CaseID_Combined/RetroNet; the bed files for detailed MEI information will be in CaseID_Combined/retro_v3; the result svg will be in CaseID_Combined/visual/
