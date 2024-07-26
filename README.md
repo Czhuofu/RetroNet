@@ -5,7 +5,7 @@ Due to GitHub's file size restrictions, some large files/folder have been placed
 For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
 
 1. [RetroNet.sif](https://drive.google.com/file/d/1OwZvYDdvbTUrQXMidWQkYp9vbx8YjFrQ/view?usp=sharing) : Move to $yourdownloadpath/pipeline/
-2. [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : Move to $yourdownloadpath/RetroVis/
+2. [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : Move to $yourdownloadpath/RetroNet/
 3. [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/refTE/
 4. [02_PE_level1](https://drive.google.com/drive/folders/197ogIPePEDBNah-Ff1IjNSKq7F3SMGzr?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/LINE/
 5. [02_PE_level1](https://drive.google.com/drive/folders/18kA4IrlP7OKStuReX4koZ8dwx4sbjqzS?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/ALU/
