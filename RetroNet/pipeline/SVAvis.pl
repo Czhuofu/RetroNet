@@ -23,7 +23,7 @@ my $chr     = $ARGV[2];
 my $te      = $ARGV[3];
 my $hg      = $ARGV[5];
 my $strand  = $ARGV[6];
-my $map_file = $masterpath.'/RetroNet/hg38_100bp.bedGraph';
+my $map_file = $ARGV[10];
 my $mat_file = $ARGV[7];
 my $CORD1    = $ARGV[8]; ## coordiantes of the insertion ###
 (open (MAP, "<$map_file")) || die "cannot open the map file\n";

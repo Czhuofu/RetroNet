@@ -82,7 +82,7 @@ done
 ###############################
 if [ "$gpu_partition" != "N" ]
 then
-    jid10=$(echo -e '#!/bin/sh\n' "singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./10_RunRetroNet.sh -o $outpath -j $sub -t $TEclass -v $ver -m $masterpath -x $cutoff" | sbatch -J ${TEclass}_RetroNet $slurm_gpu --dependency=afterok${jid9} | awk '{print $4}')
+    jid10=$(echo -e '#!/bin/sh\n' "singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./10_RunRetroNet.sh -o $outpath -j $sub -t $TEclass -v $ver -m $masterpath -x $cutoff -g $hg" | sbatch -J ${TEclass}_RetroNet $slurm_gpu --dependency=afterok${jid9} | awk '{print $4}')
 else
-    jid10=$(echo -e '#!/bin/sh\n' "singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./10_RunRetroNet.sh -o $outpath -j $sub -t $TEclass -v $ver -m $masterpath -x $cutoff" | sbatch -J ${TEclass}_RetroNet $slurm_cpu --dependency=afterok${jid9} | awk '{print $4}')
+    jid10=$(echo -e '#!/bin/sh\n' "singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./10_RunRetroNet.sh -o $outpath -j $sub -t $TEclass -v $ver -m $masterpath -x $cutoff -g $hg" | sbatch -J ${TEclass}_RetroNet $slurm_cpu --dependency=afterok${jid9} | awk '{print $4}')
 fi

@@ -199,13 +199,21 @@ fi
 ### step4: plotting the supporting reads ### 
 imgfile=$subject\_retro$ver\_strand$strand\_$TEfamily\_$chr\_$cord1\_$label\.png
 matfile=$datapath/$subject/retro_v$ver\_$strand/$subject.pe.$TEclass.matrix
+if [ $hg == 'hg38']
+then
+mapfile=$masterpath/RetroNet/hg38_100bp.bedGraph
+elif [ $hg == 'b37' ]
+then
+mapfile=$masterpath/RetroNet/b37_100bp.bedGraph
+fi
+
 if [ $TEclass == 'LINE' ]
 then
-    ./LINEvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename
+    ./LINEvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
 elif [ $TEclass == 'ALU' ]
 then
-    ./ALUvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename
+    ./ALUvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
 elif [ $TEclass == 'SVA' ]
 then
-    ./SVAvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename
+    ./SVAvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
 fi

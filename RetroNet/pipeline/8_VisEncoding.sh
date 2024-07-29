@@ -61,6 +61,8 @@ mkdir $outpath/$sub/visual_$ver
 mkdir $outpath/$sub/calls_$ver
 mkdir $outpath/$sub/visual_$ver/$TEclass
 
+if [ "$hg" == hg38 ]
+then
 awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
   | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
   | windowBed -v -w 200 \
@@ -78,6 +80,28 @@ awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.S
   | windowBed -v -w 50 \
   -b $masterpath/RetroNet/hg38.low10div.TE.bed \
   -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
+fi
+
+if [ "$hg" == b37 ]
+then
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_1/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/b37.low10div.TE.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.1.calls
+
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_0/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/b37.low10div.TE.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
+fi
 
 # --------------------------------------------------------------------------- #
 #slurm_sc="-o %x.%A.output -e %x.%A.output -p $partition_name --mem=16gb --time=100:00:00"

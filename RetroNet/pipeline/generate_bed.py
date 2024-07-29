@@ -22,7 +22,7 @@ TEclass=sys.argv[3]
 ver=sys.argv[4]
 masterpath=sys.argv[5]
 cutoff=sys.argv[6]
-
+hg=sys.argv[7]
 ##path of the calls 
 
 di0=read_call(f"{outpath}/{sub}/retro_v{ver}_0/{TEclass}/{sub}.{TEclass}.SR.PE.calls")
@@ -67,7 +67,7 @@ with open(f'{outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed',"w") as file2:
                         dire=i[-1].split(",")[3]
                     else:
                         dire=" "
-                    os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 0 -p {outpath} -m {masterpath} -g hg38")
+                    os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 0 -p {outpath} -m {masterpath} -g {hg}")
                     file2.write(key[0]+ "\t"+ '\t'.join(i[:-1])+ "\t" + key[3]+ "\t"+ dire+ "\t" + f'{max(value)}/{np.median(value)}' +"\n")
         if key[3] == "strand1":
             for i in di1[key[0]]:
@@ -76,7 +76,7 @@ with open(f'{outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed',"w") as file2:
                         dire=i[-1].split(",")[3]
                     else:
                         dire=" "
-                    os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 1 -p {outpath} -m {masterpath} -g hg38")
+                    os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 1 -p {outpath} -m {masterpath} -g {hg}")
                     file2.write(key[0]+ "\t"+ '\t'.join(i[:-1])+ "\t" + key[3]+ "\t"+ dire+ "\t" + f'{max(value)}/{np.median(value)}' +"\n")
         
 

@@ -10,7 +10,6 @@ where:
     -p  slurm partition name
     -i  input type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
     -b  BAM file (Input the path of sort.bam)
-    -c  conda path (e.g. ~/miniconda3 or ~/Anaconda3)
     -g  reference genome (default hg38, supporting hg38, hg19 and b37)"
 
 ver=3
@@ -34,8 +33,6 @@ while getopts ":ho:j:m:v:p:i:b:c:g:n:" opt; do
     i) datatype="$OPTARG"
        ;;
     b) bam=$(readlink -f $OPTARG)
-       ;;
-    c) conda_path=$(readlink -f $OPTARG)
        ;;
     g) hg="$OPTARG"
        ;;

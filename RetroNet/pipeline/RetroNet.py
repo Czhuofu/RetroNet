@@ -20,6 +20,7 @@ TEclass=sys.argv[3]
 ver=sys.argv[4]
 masterpath=sys.argv[5]
 cutoff=sys.argv[6]
+hg=sys.argv[7]
 
 ### PNG list ###
 Samples_dir = outpath + '/' + sub + '/visual_' + ver + '/'+ TEclass
@@ -95,7 +96,10 @@ f = open("{}_insertion_site.bed".format(TEclass),"w")
 for line in records[1:]:
     f.write("{}\t{}\t{}\t{}\n".format(line.split("\n")[0].split("/")[-1].split("_")[-3],line.split("\n")[0].split("/")[-1].split("_")[-2],int(line.split("\n")[0].split("/")[-1].split("_")[-2])+1,line.split("\n")[0]))
 f.close()
-os.system("windowBed -a {}_insertion_site.bed -b {}/RetroNet/sorted.hg38.centr.telos.pos.bed -w 1000 -c > {}_insertion_site_hit.bed".format(TEclass,masterpath,TEclass))
+if hg == "hg38":
+    os.system("windowBed -a {}_insertion_site.bed -b {}/RetroNet/sorted.hg38.centr.telos.pos.bed -w 1000 -c > {}_insertion_site_hit.bed".format(TEclass,masterpath,TEclass))
+elif hg == "b37":
+    os.system("windowBed -a {}_insertion_site.bed -b {}/RetroNet/sorted.b37.centr.telos.pos.bed -w 1000 -c > {}_insertion_site_hit.bed".format(TEclass,masterpath,TEclass))
 os.system("awk '{}' {}_insertion_site_hit.bed > {}_insertion_site_hited.bed".format("{print $4, $5, $6, $7}",TEclass,TEclass))
 os.system("rm -f {}_insertion_site.bed {}_insertion_site_hit.bed".format(TEclass,TEclass))
 

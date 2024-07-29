@@ -43,8 +43,6 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
 
    -b /ControlID.bam \
 
-   -c anaconda3 \
-
    -n 100 (maximum number of supporting reads analysis at a time, default 100) 
 
 ```
@@ -97,8 +95,6 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
    -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
 
    -b /CaseID.bam \
-
-   -c anaconda3 \
 
    -n 100 (maximum number of supporting reads analysis at a time, default 100) 
 

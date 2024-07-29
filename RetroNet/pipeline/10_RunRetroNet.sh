@@ -8,6 +8,7 @@ where:
     -t  TE class: LINE/ALU
     -v  version control for RetroSom (default 1)
     -m  masterpath (default ~/masterpath)
+    -g  hg(default hg38)
     -x  cutoff or threshold (default 0.5)"
 
 while getopts ":ho:j:t:f:v:s:m:g:i:x:" opt; do
@@ -24,6 +25,8 @@ while getopts ":ho:j:t:f:v:s:m:g:i:x:" opt; do
     v) ver="$OPTARG"
        ;;
     m) masterpath=$(readlink -f $OPTARG)
+       ;;
+    g) hg="$OPTARG"
        ;;
     x) cutoff="$OPTARG"
        ;;
@@ -42,5 +45,5 @@ done
 source /opt/miniconda3/bin/activate RetroSom
 
 mkdir $outpath/$sub/RetroNet
-python3 RetroNet.py $outpath $sub $TEclass $ver $masterpath $cutoff
-python3 $masterpath/RetroNet/pipeline/generate_bed.py $outpath $sub $TEclass $ver $masterpath $cutoff
+python3 RetroNet.py $outpath $sub $TEclass $ver $masterpath $cutoff $hg
+python3 $masterpath/RetroNet/pipeline/generate_bed.py $outpath $sub $TEclass $ver $masterpath $cutoff $hg
