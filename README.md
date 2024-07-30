@@ -9,6 +9,7 @@ For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
 3. [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/refTE/
 4. [02_PE_level1](https://drive.google.com/drive/folders/197ogIPePEDBNah-Ff1IjNSKq7F3SMGzr?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/LINE/
 5. [02_PE_level1](https://drive.google.com/drive/folders/18kA4IrlP7OKStuReX4koZ8dwx4sbjqzS?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/ALU/
+6. [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) : If you need to analyse b37 bam files, please download and move to $yourdownloadpath/RetroNet/
 
 ## How to use
 ### Workflow
@@ -20,7 +21,7 @@ The input file for this pipeline is a Bam file. If the size of the Bam file you 
 
 For example: bigbam.bam &rarr; bigbam-1.bam bigbam-2.bam bigbam-3.bam ... (start from 1)
 Recommend using samtools split for split. If you only have one Bam file, please also add the -1 suffix to the bam file.
-Now, the pipeline only support hg38.
+Now, the pipeline can support hg38 and b37.
 
 ### Analyze control first 
 
