@@ -14,6 +14,7 @@ For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
 ## How to use
 ### Workflow
 
+![Retro3 2](https://github.com/user-attachments/assets/10da5f78-0252-4d01-8145-b3f5c36cfca3)
 
 ### Usage
 This pipeline is divided into two steps, you can run Singularity_Slurm_RetroNet_step1.sh and Singularity_Slurm_RetroNet_step2.sh to finish the analysis process.
