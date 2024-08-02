@@ -199,7 +199,7 @@ fi
 ### step4: plotting the supporting reads ### 
 imgfile=$subject\_retro$ver\_strand$strand\_$TEfamily\_$chr\_$cord1\_$label\.png
 matfile=$datapath/$subject/retro_v$ver\_$strand/$subject.pe.$TEclass.matrix
-if [ $hg == 'hg38']
+if [ $hg == 'hg38' ]
 then
 mapfile=$masterpath/RetroNet/hg38_100bp.bedGraph
 elif [ $hg == 'b37' ]
