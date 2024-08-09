@@ -26,10 +26,10 @@ hg=sys.argv[7]
 Samples_dir = outpath + '/' + sub + '/visual_' + ver + '/'+ TEclass
 sample_list = []
 for dirpath, dirnames, filenames in os.walk(Samples_dir):
-    for filename in filenames:       
-        sample_list.append(os.path.join(dirpath, filename))
+    for filename in filenames:
+        if Image.open(os.path.join(dirpath, filename)).convert('RGB').size == (6620,60) and os.path.getsize(os.path.join(dirpath, filename)) != 0:  
+            sample_list.append(os.path.join(dirpath, filename))
 print(len(sample_list),TEclass,"images founded")
-
 ### Custom my own dataset ###
 class MyDataset(Dataset):
     def __init__(self, file_list):
