@@ -23,12 +23,30 @@ cutoff=sys.argv[6]
 hg=sys.argv[7]
 
 ### PNG list ###
+## Choose model ##
 Samples_dir = outpath + '/' + sub + '/visual_' + ver + '/'+ TEclass
 sample_list = []
-for dirpath, dirnames, filenames in os.walk(Samples_dir):
-    for filename in filenames:
-        if Image.open(os.path.join(dirpath, filename)).convert('RGB').size == (6620,60) and os.path.getsize(os.path.join(dirpath, filename)) != 0:  
-            sample_list.append(os.path.join(dirpath, filename))
+if TEclass == "LINE":
+    Best_model_dir = masterpath + "/RetroNet/LINE_RetroNet_model.pt"
+    Inspect_script = "./LINE_Inpection.py"
+    for dirpath, dirnames, filenames in os.walk(Samples_dir):
+        for filename in filenames:
+            if Image.open(os.path.join(dirpath, filename)).convert('RGB').size == (6620,60) and os.path.getsize(os.path.join(dirpath, filename)) != 0:  
+                sample_list.append(os.path.join(dirpath, filename))
+elif TEclass == "ALU":
+    Best_model_dir = masterpath + "/RetroNet/ALU_RetroNet_model.pt"
+    Inspect_script = "./ALU_Inpection.py"
+    for dirpath, dirnames, filenames in os.walk(Samples_dir):
+        for filename in filenames:
+            if Image.open(os.path.join(dirpath, filename)).convert('RGB').size == (2660,120) and os.path.getsize(os.path.join(dirpath, filename)) != 0:  
+                sample_list.append(os.path.join(dirpath, filename))
+elif TEclass == "SVA":
+    Best_model_dir = masterpath + "/RetroNet/SVA_RetroNet_model.pt"
+    Inspect_script = "./SVA_Inpection.py"
+    for dirpath, dirnames, filenames in os.walk(Samples_dir):
+        for filename in filenames:
+            if Image.open(os.path.join(dirpath, filename)).convert('RGB').size == (2660,80) and os.path.getsize(os.path.join(dirpath, filename)) != 0:  
+                sample_list.append(os.path.join(dirpath, filename))
 print(len(sample_list),TEclass,"images founded")
 ### Custom my own dataset ###
 class MyDataset(Dataset):
@@ -53,16 +71,6 @@ class MyDataset(Dataset):
     def __len__(self): #necessary function
         return self.data.shape[0]
 
-## Choose model ##
-if TEclass == "LINE":
-    Best_model_dir = masterpath + "/RetroNet/LINE_RetroNet_model.pt"
-    Inspect_script = "./LINE_Inpection.py"
-elif TEclass == "ALU":
-    Best_model_dir = masterpath + "/RetroNet/ALU_RetroNet_model.pt"
-    Inspect_script = "./ALU_Inpection.py"
-elif TEclass == "SVA":
-    Best_model_dir = masterpath + "/RetroNet/SVA_RetroNet_model.pt"
-    Inspect_script = "./SVA_Inpection.py"
 ### Initial Setting ###
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 net = resnet18(weights=None, progress=True,num_classes=2)

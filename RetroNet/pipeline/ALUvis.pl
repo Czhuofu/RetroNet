@@ -276,7 +276,7 @@ while ($line = <MAP>)
     }
 
 my %ks;
-my $count = 30;
+my $count = 10;
 my $count_i = 0;
 $j = $k = -1;
 

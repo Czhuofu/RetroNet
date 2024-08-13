@@ -219,7 +219,7 @@ while ($line = <MAP>)
     }
 
 my %ks;
-my $count = 30;
+my $count = 10;
 my $count_i = 0;
 my $size = $#reads + 1;
 # print "$size\n";
