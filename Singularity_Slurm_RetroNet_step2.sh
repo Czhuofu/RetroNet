@@ -100,7 +100,7 @@ then
     jid8c=$(echo -e '#!/bin/sh\n'"singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./8_VisEncoding.sh -o $outpath -j $sub -m $masterpath -v $ver -p $partition_name -g $hg -z $gpu_partition -c $cont -x $cutoff -t SVA -f SVA" | sbatch -J Vis_SVA $slurm_sc --dependency=afterok:$jid7c| awk '{print $4}')
     jid8cLINE=$(echo -e '#!/bin/sh\n' "bash ./8c_submit910.sh -o $outpath -j $sub -m $masterpath -v $ver -p $partition_name -g $hg -z $gpu_partition -c $cont -x $cutoff -t LINE -f L1HS" | sbatch -J L19_10 $slurm_sc --dependency=afterok:$jid8a | awk '{print $4}')
     jid8cAlu=$(echo -e '#!/bin/sh\n'"bash ./8c_submit910.sh -o $outpath -j $sub -m $masterpath -v $ver -p $partition_name -g $hg -z $gpu_partition -c $cont -x $cutoff -t ALU -f AluY" | sbatch -J Alu9_10 $slurm_sc --dependency=afterok:$jid8b | awk '{print $4}')
-    jid8cAlu=$(echo -e '#!/bin/sh\n'"bash ./8c_submit910.sh -o $outpath -j $sub -m $masterpath -v $ver -p $partition_name -g $hg -z $gpu_partition -c $cont -x $cutoff -t SVA -f SVA" | sbatch -J SVA9_10 $slurm_sc --dependency=afterok:$jid8c| awk '{print $4}')
+    jid8cSVA=$(echo -e '#!/bin/sh\n'"bash ./8c_submit910.sh -o $outpath -j $sub -m $masterpath -v $ver -p $partition_name -g $hg -z $gpu_partition -c $cont -x $cutoff -t SVA -f SVA" | sbatch -J SVA9_10 $slurm_sc --dependency=afterok:$jid8c| awk '{print $4}')
 else
     # Copy script #
     cd $outpath/$subject/script

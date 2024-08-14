@@ -47,5 +47,7 @@ source /opt/miniconda3/bin/activate RetroSom
 mkdir $outpath/$sub/RetroNet
 python3 RetroNet.py $outpath $sub $TEclass $ver $masterpath $cutoff $hg
 python3 $masterpath/RetroNet/pipeline/generate_bed.py $outpath $sub $TEclass $ver $masterpath $cutoff $hg
-
+##Compress the png picture##
 tar -zcvf $outpath/$sub/visual_$ver/$TEclass.tar.gz $outpath/$sub/visual_$ver/$TEclass/  --remove-files
+##Remove temp file ##
+rm -rf $outpath/$sub/visual_$ver/temp_*$TEclass*
