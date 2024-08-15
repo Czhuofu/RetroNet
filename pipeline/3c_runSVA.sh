@@ -48,6 +48,14 @@ done
 retro=retro_v$ver\_$strand
 rm -r $outpath/$sub/$retro/SVA
 mkdir $outpath/$sub/$retro/SVA
+rm $outpath/$sub/$retro/$sub.discover
+rm $outpath/$sub/$retro/$sub.sr.discover
+rm $outpath/$sub/$retro/$sub.depth
+rm $outpath/$sub/$retro/$sub.bed
+ln -s $outpath/$sub/retro_v$ver/$sub.discover $outpath/$sub/$retro/$sub.discover
+ln -s $outpath/$sub/retro_v$ver/$sub.sr.discover $outpath/$sub/$retro/$sub.sr.discover
+ln -s $outpath/$sub/retro_v$ver/$sub.depth $outpath/$sub/$retro/$sub.depth
+ln -s $outpath/$sub/retro_v$ver/$sub.bed $outpath/$sub/$retro/$sub.bed
 tmpfolder=$outpath/$sub
 
 date '+%m/%d/%y %H:%M:%S'
