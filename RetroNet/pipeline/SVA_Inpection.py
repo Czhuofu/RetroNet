@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy
 import torch
 import torchvision
 from PIL import Image

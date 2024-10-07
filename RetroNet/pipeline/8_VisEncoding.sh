@@ -61,7 +61,7 @@ mkdir $outpath/$sub/visual_$ver
 mkdir $outpath/$sub/calls_$ver
 mkdir $outpath/$sub/visual_$ver/$TEclass
 
-if [ "$hg" == hg38 ]
+if [ "$hg" == hg38 ] && { [ "$TEclass" == LINE ] || [ "$TEclass" == SVA ]; }
 then
 awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
   | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
@@ -82,7 +82,28 @@ awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.S
   -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
 fi
 
-if [ "$hg" == b37 ]
+if [ "$hg" == hg38 ] && [ "$TEclass" == ALU ]
+then
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_1/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/hg38.low10div.TE.alu20.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.1.calls
+
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_0/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/hg38.low10div.TE.alu20.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
+fi
+
+if [ "$hg" == b37 ] && { [ "$TEclass" == LINE ] || [ "$TEclass" == SVA ]; }
 then
 awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
   | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
@@ -100,6 +121,27 @@ awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.S
   -b $outpath/$cont/retro_v${ver}_0/$TEclass/$cont.$TEclass.SR.PE.calls \
   | windowBed -v -w 50 \
   -b $masterpath/RetroNet/b37.low10div.TE.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
+fi
+
+if [ "$hg" == b37 ] && [ "$TEclass" == ALU ]
+then
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_1/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_1/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/b37.low10div.TE.alu20.bed \
+  -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.1.calls
+
+awk '{if ($5 > 1) print}' $outpath/$sub/retro_v${ver}_0/$TEclass/$sub.$TEclass.SR.PE.calls \
+  | grep -v 'chrUn' | grep -v 'random' | grep -v 'alt' \
+  | windowBed -v -w 200 \
+  -a stdin \
+  -b $outpath/$cont/retro_v${ver}_0/$TEclass/$cont.$TEclass.SR.PE.calls \
+  | windowBed -v -w 50 \
+  -b $masterpath/RetroNet/b37.low10div.TE.alu20.bed \
   -a stdin > $outpath/$sub/calls_$ver/$sub.$TEclass.0.calls
 fi
 

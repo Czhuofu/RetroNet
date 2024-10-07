@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy
 import torch
 import torchvision
 from PIL import Image
@@ -772,7 +773,7 @@ else:
                         if abs(int(clip_max[0]) - int(clip_max[1])) > 5:
                             Inspection = Inspection + "Clip site difference"
     ## PCR duplication #
-    PCR_count = -1
+    PCR_count = 0
     if reads_direction[0] == reads_direction[1]:
         if align_color[0] == align_color[2] and align_color[1] == align_color[3]:
             if abs(int(arrow_min[0]) - int(arrow_min[1])) < 5:

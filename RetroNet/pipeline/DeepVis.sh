@@ -209,11 +209,11 @@ fi
 
 if [ $TEclass == 'LINE' ]
 then
-    ./LINEvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
+    ./LINEvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile $filename
 elif [ $TEclass == 'ALU' ]
 then
-    ./ALUvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
+    ./ALUvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile $filename
 elif [ $TEclass == 'SVA' ]
 then
-    ./SVAvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile
+    ./SVAvis.pl $masterpath $imgfile $chr $TEfamily $datapath/$subject/visual_${ver}/${TEclass} $hg $strand $matfile $cord1 $datapath/$subject/visual_${ver}/temp_$filename $mapfile $filename
 fi
