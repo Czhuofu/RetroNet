@@ -198,7 +198,7 @@ for (( c=startlib; c<=$readgroup; c++ ))
      done
 
 ### make calls ###
-awk '{if ($4 ~ /Alu/) print}' $outpath/$sub/retro_v$ver\_$strand/$sub.sr.tabe.discover | grep 'OK' | \
+awk '{if ($4 ~ /SVA/) print}' $outpath/$sub/retro_v$ver\_$strand/$sub.sr.tabe.discover | grep 'OK' | \
    awk '{print $1"\t"$2"\t"$3"\t"$5}' | sort -T $tmpfolder -u | \
    sort -T $tmpfolder -k1,1 -k2,3n | \
    mergeBed -d 40 -c 4 -o distinct -delim ";" \
