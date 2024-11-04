@@ -82,14 +82,14 @@ then
     mkdir $outpath/$sub/temp
     mkdir $outpath/$sub/script
     mkdir $outpath/$sub/retro_v$ver
-    mkdir $outpath/$sub/retro_v$ver_0
-    mkdir $outpath/$sub/retro_v$ver_1
-    mkdir $outpath/$sub/retro_v$ver_0/LINE
-    mkdir $outpath/$sub/retro_v$ver_1/LINE
-    mkdir $outpath/$sub/retro_v$ver_0/ALU
-    mkdir $outpath/$sub/retro_v$ver_1/ALU
-    mkdir $outpath/$sub/retro_v$ver_0/SVA
-    mkdir $outpath/$sub/retro_v$ver_1/SVA
+    mkdir $outpath/$sub/retro_v$ver\_0
+    mkdir $outpath/$sub/retro_v$ver\_1
+    mkdir $outpath/$sub/retro_v$ver\_0/LINE
+    mkdir $outpath/$sub/retro_v$ver\_1/LINE
+    mkdir $outpath/$sub/retro_v$ver\_0/ALU
+    mkdir $outpath/$sub/retro_v$ver\_1/ALU
+    mkdir $outpath/$sub/retro_v$ver\_0/SVA
+    mkdir $outpath/$sub/retro_v$ver\_1/SVA
     cd $outpath/$sub/script
     cp $masterpath/RetroNet/pipeline/* $outpath/$sub/script
     # submit jobs #
