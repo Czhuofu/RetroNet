@@ -41,7 +41,7 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
 
    -p your_slurm_partition_name \
 
-   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
+   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover) \
 
    -b /ControlID.bam \
 
@@ -52,7 +52,7 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
 **Then run the step2 to merge the result of Control:**
 
 ```
-$yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
+$yourdownloadpath/Singularity_Slurm_RetroNet_generate_control.sh \
   
    -o /directory_path_for_output \
   
@@ -65,12 +65,6 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
    -g hg38 (default hg38, supporting hg38, hg19 and b37) \
   
    -p your_slurm_partition_name \
-  
-   -c ControlID \
-  
-   -z "N" (gpu_partition name, default "N") \
-  
-   -x 0.99 ( probability cutoff default 0.99) \
   
    -l 1 (number of bam you split)
 ```
