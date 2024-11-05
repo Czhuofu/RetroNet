@@ -10,16 +10,12 @@ where:
     -v  version control for RetroSom (default 3)
     -p  slurm partition name
     -g  reference genome (default hg38, supporting hg38, hg19 and b37)
-    -l  number of the libraries (default is 1)
-    -c  control or reference group
-    -z  gpu partition name (default is N)
-    -x  cutoff or threshold (default 0.99)"
+    -l  number of the libraries (default is 1)"
 
 readgroup=1
 ver=3
 hg=hg38
-gpu_partition="N"
-cutoff=0.99
+
 while getopts ":ho:j:m:v:p:g:l:c:z:x:" opt; do
   case $opt in
     h) echo "$usage"
@@ -38,12 +34,6 @@ while getopts ":ho:j:m:v:p:g:l:c:z:x:" opt; do
     g) hg="$OPTARG"
        ;;
     l) readgroup="$OPTARG"
-       ;;
-    c) cont="$OPTARG"
-       ;;
-    z) gpu_partition="$OPTARG"
-       ;;
-    x) cutoff="$OPTARG"
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
