@@ -88,8 +88,8 @@ then
     jid7c=$(echo -e '#!/bin/sh\n'"singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./7a_Merge_Anchor.sh -o $outpath -j $subject -m $masterpath -v $ver -l $readgroup" | sbatch -J CombineAnchor $slurm_sc --dependency=afterok:$jid7a:$jid7b | awk '{print $4}')
     jid7d=$(echo -e '#!/bin/sh\n'"singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./7b_generate_control.sh -o $outpath -j $subject -m $masterpath -v $ver -l $readgroup" | sbatch -J Generatecontrol $slurm_sc --dependency=afterok:$jid7c | awk '{print $4}')
 else
-    cd $outpath/$sub/script
-    cp $masterpath/RetroNet/pipeline/* $outpath/$sub/script
+    cd $outpath/$subject/script
+    cp $masterpath/RetroNet/pipeline/* $outpath/$subject/script
     jid7d=$(echo -e '#!/bin/sh\n'"singularity exec -B $outpath,$tmppath,$masterpath $masterpath/pipeline/RetroNet.sif ./7b_generate_control.sh -o $outpath -j $subject -m $masterpath -v $ver -l $readgroup" | sbatch -J Generatecontrol $slurm_sc | awk '{print $4}')
 fi
 

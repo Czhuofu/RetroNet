@@ -36,6 +36,9 @@ while getopts ":ho:j:m:v:c:l:" opt; do
   esac
 done
 
+source /opt/miniconda3/bin/activate RetroSom
+export TMPDIR=$outpath
+
 sub=$subject\_Combined
 
 if [ "$readgroup" != 1 ]
@@ -51,12 +54,12 @@ then
          grep "SVA" $outpath/$sub2$c/retro_v$ver/$sub2$c.0.discover | awk '{if ($8 >= 90) print $1"\t"$2"\t"$3"\t"$5}' | sort -u >> /$outpath/$sub/retro_v$ver\_0/SVA/$sub.SVA.nofilter.0.bed
          grep "SVA" $outpath/$sub2$c/retro_v$ver/$sub2$c.1.discover | awk '{if ($8 >= 90) print $1"\t"$2"\t"$3"\t"$5}' | sort -u >> /$outpath/$sub/retro_v$ver\_1/SVA/$sub.SVA.nofilter.1.bed
        done
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.nofilter.temp.bed
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_1/LINE/$sub.LINE.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/LINE/$sub.LINE.nofilter.temp.bed
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_0/ALU/$sub.ALU.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/ALU/$sub.ALU.nofilter.temp.bed
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_1/ALU/$sub.ALU.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/ALU/$sub.ALU.nofilter.temp.bed
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_0/SVA/$sub.SVA.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/SVA/$sub.SVA.nofilter.temp.bed
-    awk '{if (length($1) < 6) print}' /$outpath/$sub/retro_v$ver\_1/SVA/$sub.SVA.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/SVA/$sub.SVA.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_1/LINE/$sub.LINE.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/LINE/$sub.LINE.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_0/ALU/$sub.ALU.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/ALU/$sub.ALU.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_1/ALU/$sub.ALU.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/ALU/$sub.ALU.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_0/SVA/$sub.SVA.nofilter.0.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_0/SVA/$sub.SVA.nofilter.temp.bed
+    awk '{if (length($1) < 6) print $1"\t"$2"\t"$3"\t"$4}' /$outpath/$sub/retro_v$ver\_1/SVA/$sub.SVA.nofilter.1.bed | sort -k1,1V -k2,2n -u -o /$outpath/$sub/retro_v$ver\_1/SVA/$sub.SVA.nofilter.temp.bed
     mv $outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.SR.PE.calls $outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.SR.PE.old.calls
     awk '{if ($5 > 1) print}' $outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.SR.PE.old.calls > $outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.SR.PE.calls
     bedtools merge -i /$outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.nofilter.temp.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$sub/retro_v$ver\_0/LINE/$sub.LINE.SR.PE.calls
@@ -89,22 +92,22 @@ else
     grep "SVA" $outpath/$subject/retro_v$ver/$subject.0.discover | awk '{if ($8 >= 90) print $1"\t"$2"\t"$3"\t"$5}' | awk '{if (length($1) < 6) print}' | sort -k1,1V -k2,2n -u -o /$outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.nofilter.0.bed
     grep "SVA" $outpath/$subject/retro_v$ver/$subject.1.discover | awk '{if ($8 >= 90) print $1"\t"$2"\t"$3"\t"$5}' | awk '{if (length($1) < 6) print}' | sort -k1,1V -k2,2n -u -o /$outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.nofilter.1.bed
     mv $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.nofilter.0.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls
     mv $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.nofilter.1.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls
     mv $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.calls $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.nofilter.0.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_0/ALU/$subject.ALU.SR.PE.calls
     mv $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.calls $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.nofilter.1.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_1/ALU/$subject.ALU.SR.PE.calls
     mv $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.calls $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.nofilter.0.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_0/SVA/$subject.SVA.SR.PE.calls
     mv $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.calls $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.old.calls
-    awk '{if ($5 > 1) print}' $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.calls
+    awk '{if ($5 > 1) print $1"\t"$2"\t"$3"\t"$4}' $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.old.calls > $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.calls
     bedtools merge -i /$outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.nofilter.1.bed -c 1 -o count | awk '{if ($4 >1) print}' >> $outpath/$subject/retro_v$ver\_1/SVA/$subject.SVA.SR.PE.calls
     sort -k1,1V -k2,2n -u -o $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls $outpath/$subject/retro_v$ver\_0/LINE/$subject.LINE.SR.PE.calls
     sort -k1,1V -k2,2n -u -o $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls $outpath/$subject/retro_v$ver\_1/LINE/$subject.LINE.SR.PE.calls
