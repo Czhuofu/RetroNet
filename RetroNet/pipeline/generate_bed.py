@@ -70,7 +70,13 @@ def detect_unbalance(this_strand,other_strand):
         return [this_strand[0],this_strand[1],this_strand[2],this_strand[3],this_strand[4],dire_both,detect_sv(all_pair_read, dire_both,int(other_strand[-2])+int(this_strand[-3]),int(other_strand[-1])+int(this_strand[-2]))]
         ##need to finish the output
     
-
+def check_l1_activity(p1,p2):
+    if p1[0] and p2[1] in ["A","N"]:
+        if p1[1] in ["C","N"] and p2[0] in ["T","N"]:
+            if p1[2] and p2[2] in ["A","G","N"]:
+                return True
+    return False
+    
 ## read the parameter
 outpath=sys.argv[1]
 sub=sys.argv[2]
@@ -92,6 +98,9 @@ with open ("{}/{}_Inspected_{}_cut{}.txt".format(outpath + "/" + sub + "/RetroNe
     for line in file:
         columns = line.strip().split()
         if float(columns[1]) > float(cutoff) and columns[2] == '0' and columns[3] == 'PASS' and "green" not in columns[-1]:
+            if TEclass == "LINE":
+                if not check_l1_activity(columns[4],columns[5]):
+                    continue
             ##read the position
             read_pos_all=columns[0].split("_")
             read_pos=tuple([read_pos_all[-3],int(read_pos_all[-2]),int(read_pos_all[-2])+1,read_pos_all[-5]])
@@ -152,6 +161,7 @@ with open (f'{outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.head',"w") as file3:
     file3.write("\t".join(["chrom","start_pos","stop_pos","num_support_read","num_split_read","num_pair_read","insert_strand","support_read_direction","Probability","annotation"])+"\n")
 
 os.system(f'sort -k1,1V -k2,2n -o {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp')
-os.system(f'cat {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.head {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp > {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed')
-os.system(f'rm {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp')
+os.system(f'bedtools merge -i {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp -c 4,5,6,7,8,9,10 -o sum,sum,sum,collapse,collapse,collapse,collapse -delim "|" > {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp1')
+os.system(f'cat {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.head {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp1 > {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed')
+os.system(f'rm {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp*')
 os.system(f'rm {outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.head')
