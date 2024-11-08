@@ -71,10 +71,9 @@ def detect_unbalance(this_strand,other_strand):
         ##need to finish the output
     
 def check_l1_activity(p1,p2):
-    if p1[0] and p2[1] in ["A","N"]:
-        if p1[1] in ["C","N"] and p2[0] in ["T","N"]:
-            if p1[2] and p2[2] in ["A","G","N"]:
-                return True
+    if p1 in ["ACA","ACG","NNN"]:
+        if p2 in ["TAG","NNN"]:
+            return True
     return False
     
 ## read the parameter
