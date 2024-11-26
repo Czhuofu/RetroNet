@@ -1,9 +1,19 @@
 # Overview
+- [RetroNet](#1)
+- [System Requirements](#2)
+- [Installation Guide](#3)
+- [Usage](#4)
+- [Demo](#5)
+- [Analyze HG008 Cancer Cell](#6)
+<p id="1"></p>
+
 # RetroNet
 `RetroNet` is a computational tool that detects somatic mobile element insertions (MEIs) in human genomes using deep learning. 
 By encoding sequencing reads into images, it identifies `L1`, `Alu`, and `SVA` insertions with high precision, even at low frequencies.
 ### Workflow
 ![Retro3 2](https://github.com/user-attachments/assets/10da5f78-0252-4d01-8145-b3f5c36cfca3)
+<p id="2"></p>
+
 # System Requirements
 **Cluster Management**:
 - `RetroNet` requires a cluster environment managed by `SLURM`.
@@ -17,6 +27,7 @@ By encoding sequencing reads into images, it identifies `L1`, `Alu`, and `SVA` i
    and has been tested on `Singularity v3.8.6`, `v1.2.2-1.el8`, `v3.8.7-1.el7`
 <br/>
 <br/>
+<p id="3"></p>
 
 # Installation Guide
 **Install from Github**
@@ -33,6 +44,7 @@ For instance, after clone the `RetroNet` files, set the directory path as `$your
 - [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) **(Optional)** : If you need to analyse b37 bam files `mv b37_100bp.bedGraph $yourdownloadpath/RetroNet/`
 <br/>
 <br/>
+<p id="4"></p>
 
 # Usage
 **This pipeline consists of two main steps:**
@@ -131,6 +143,8 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
       - `$outpath/$subject_case/visual/`: somatic MEIs of `L1`, `Alu`, and `SVA`
       
 - If you split your case `BAM` file, the output folder will be `subject_case=${subject_case}_Combined`
+<p id="5"></p>
+
 # Demo
 This demo has been tested under the `Burgundy HPC` in City University of Hong Kong.
 Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1m0dMPHCzUgdrl_ZoJvPF5yBSYxdl-T3R/view?usp=drive_link)
@@ -204,6 +218,8 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
 **Consumed time for tumour cell:**
 - `Singularity_Slurm_RetroNet_step1.sh` 6m28s
 - `Singularity_Slurm_RetroNet_step2.sh` 2h47m30s
+<p id="6"></p>
+
 # Example: Analysis of HG008 Cancer Cell Line
 Please see the [HG008_analyze_log.md](https://github.com/Czhuofu/RetroNet/blob/master/HG008_analyze_log.md)
 # Licence
