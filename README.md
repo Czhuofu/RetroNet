@@ -1,125 +1,210 @@
-# A brief introduction for RetroNet
-## Installation instructions
-Basically, all the files were storage in the GITHUB.
-Due to GitHub's file size restrictions, some large files/folder have been placed in Google Drive. You should download them from the link below and place them in the corresponding location.
-For example, set the directory you download the RetroSomV3 as $yourdownloadpath.
-
-1. [RetroNet.sif](https://drive.google.com/file/d/1OUg-L2sQ7ucaNsTXolIus0uCT5VG29CC/view?usp=drive_link) : Move to $yourdownloadpath/pipeline/
-2. [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : Move to $yourdownloadpath/RetroNet/
-3. [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/refTE/
-4. [02_PE_level1](https://drive.google.com/drive/folders/197ogIPePEDBNah-Ff1IjNSKq7F3SMGzr?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/LINE/
-5. [02_PE_level1](https://drive.google.com/drive/folders/18kA4IrlP7OKStuReX4koZ8dwx4sbjqzS?usp=sharing) : This is a folder, please download and move it to $yourdownloadpath/ALU/
-6. [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) : If you need to analyse b37 bam files, please download and move to $yourdownloadpath/RetroNet/
-
-## How to use
+# Overview
+# RetroNet
+`RetroNet` is a computational tool that detects somatic mobile element insertions (MEIs) in human genomes using deep learning. 
+By encoding sequencing reads into images, it identifies `L1`, `Alu`, and `SVA` insertions with high precision, even at low frequencies.
 ### Workflow
-
 ![Retro3 2](https://github.com/user-attachments/assets/10da5f78-0252-4d01-8145-b3f5c36cfca3)
+# System Requirements
+**Cluster Management**:
+- `RetroNet` requires a cluster environment managed by `SLURM`.
+- Memory Requirements:
+   - Single-core tasks: Require 48 GB.
+   - Multi-core tasks: Require 16 GB per core.
 
-### Usage
-This pipeline is divided into two steps, you can run Singularity_Slurm_RetroNet_step1.sh and Singularity_Slurm_RetroNet_step2.sh to finish the analysis process.
-The input file for this pipeline is a Bam file. If the size of the Bam file you input is greater than 200G, please split it and name it with a suffix of - and a number.
+**Containerization**:
+- `Singularity` is required to execute the containerized environment.
+   - `RetroNet.sif` was created using `Singularity v3.7.3`, 
+   and has been tested on `Singularity v3.8.6`, `v1.2.2-1.el8`, `v3.8.7-1.el7`
+<br/>
+<br/>
 
-For example: bigbam.bam &rarr; bigbam-1.bam bigbam-2.bam bigbam-3.bam ... (start from 1)
-Recommend using samtools split for split. If you only have one Bam file, please also add the -1 suffix to the bam file.
-Now, the pipeline can support hg38 and b37.
+# Installation Guide
+**Install from Github**
+````bash
+git clone https://github.com/Czhuofu/RetroNet.git
+````
+Due to GitHub's file size limitations, some large files and folders are hosted on Google Drive. 
+Please download them using the link provided below and place them in the appropriate locations. 
+For instance, after clone the `RetroNet` files, set the directory path as `$yourdownloadpath`
 
-### Analyze control first 
+- [RetroNet.sif](https://drive.google.com/file/d/1OUg-L2sQ7ucaNsTXolIus0uCT5VG29CC/view?usp=drive_link) : `mv RetroNet.sif $yourdownloadpath/pipeline/`
+- [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : `mv hg38_100bp.bedGraph $yourdownloadpath/RetroNet/`
+- [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder `mv -r ./position $yourdownloadpath/refTE/`
+- [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) **(Optional)** : If you need to analyse b37 bam files `mv b37_100bp.bedGraph $yourdownloadpath/RetroNet/`
+<br/>
+<br/>
 
-```
+# Usage
+**This pipeline consists of two main steps:**
+1. Analyze control sample
+   - Run [`Singularity_Slurm_RetroNet_step1.sh`](#1-analyze-control-sample) screens candidate MEI sites and extracts supporting reads from the input `BAM` file.
+   - Run [`Singularity_Slurm_RetroNet_generate_control.sh`](#1-analyze-control-sample) construct germline MEIs in control sample.
+2.  Analyze case sample 
+    - Run [`Singularity_Slurm_RetroNet_step1.sh`](#2-analyze-case-sample) screens candidate MEI sites and extracts supporting reads from the input `BAM` file.
+    - Run [`Singularity_Slurm_RetroNet_step2.sh`](#2-analyze-case-sample) excludes germline MEIs by comparing with control samples. 
+It also encodes the supporting reads into `PNG` images for deep learning model predictions and human observation.
+
+**Note 1:**
+
+If the input control or tissue `BAM` files exceed 100X sequence depth (approximately larger than 200 GB), please split them into smaller parts and append a suffix in the format `-number` to the filenames.
+- Example: `bigbam.bam` → `bigbam-1.bam`, `bigbam-2.bam`, `bigbam-3.bam`, ... (starting from `-1`).
+````bash
+# If your BAM file consists multiple DNA readgroups, you can follow these to split your bam files
+subjectID=bigbam
+samtools split -f "%*-%#.bam" ${subjectID}.bam
+# Rename the splited BAM -> bigbam-1.bam, bigbam-2.bam, bigbam-3.bam...
+for file in ${subjectID}-*.bam; do
+  num=$(echo "$file" | grep -oP '(?<=-)\d+(?=\.bam)')
+  new_num=$((num + 1))
+  new_name=${subjectID}-${new_num}.bam
+  mv $file $new_name
+done
+````
+**Note 2:**
+
+Currently, the pipeline supports both hg38 and b37 genome builds.
+<br/>
+## Detail code for running pipeline
+### 1. Analyze Control Sample
+````bash
+### if you have multiple bam files, please run step 1 for each split bam
 $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
-
-   -o /directory_path_for_output \
-
-   -j ControlID \
-
-   -m $yourdownloadpath \
-
-   -v 3 (version control for RetroSom, default 3) \
-
-   -g hg38 (default hg38, supporting hg38, hg19 and b37)\
-
-   -p your_slurm_partition_name \
-
-   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover) \
-
-   -b /ControlID.bam \
-
-   -n 100 (maximum number of supporting reads analysis at a time, default 100) 
-
-```
-
-**Then run the step2 to merge the result of Control:**
-
-```
+   -o $outpath \              # Output path for your analysis
+   -j $subject_control \      # Subject ID of contol sample
+   -m $yourdownloadpath \     # The path where you place RetroNet
+   -g hg38 \                  # Default hg38, supporting hg38 and b37
+   -p $slurm_cpu_partition \  # SLURM cpu partition
+   -i $input_type \           # 1=sort.bam; 2=Cleaned BAM (excludes duplicates, supplementary alignment, secondary alignment)
+   -b $BAM_file \             # BAM file of the subject
+   -n 100                     # Maximum number of supporting reads analysis at a time, default 100
+````
+````bash
+### run after finish every step 1 task
 $yourdownloadpath/Singularity_Slurm_RetroNet_generate_control.sh \
-  
-   -o /directory_path_for_output \
-  
-   -j ControlID \
-  
-   -m $yourdownloadpath \
-  
-   -v 3 (version control for RetroSom, default 3) \
-  
-   -g hg38 (default hg38, supporting hg38, hg19 and b37) \
-  
-   -p your_slurm_partition_name \
-  
-   -l 1 (number of bam you split)
-```
-
-### Analyze case next
-
-**Please ensure that the case and control use the same output path.**
-
-```
+   -o $outpath \              # Output path for your analysis
+   -j $subject_control \      # Subject ID of contol sample
+   -m $yourdownloadpath \     # The path where you place RetroNet
+   -g hg38 \                  # Default hg38, supporting hg38 and b37
+   -p $slurm_cpu_partition \  # SLURM cpu partition
+   -l $num_control_BAM        # number of control BAM you split
+````
+### 2. Analyze Case Sample
+**Noted**: Please ensure use same output path for your `control` and `case` sample
+````bash
 $yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
-
-   -o /directory_path_for_output \
-
-   -j CaseID \
-
-   -m $yourdownloadpath \
-
-   -v 3 (version control for RetroSom, default 3) \
-
-   -g hg38 (default hg38, supporting hg38, hg19 and b37)\
-
-   -p your_slurm_partition_name \
-
-   -i input_type (1=sort.bam; 2=CleanBAM_and_ready_to_RetroDiscover)
-
-   -b /CaseID.bam \
-
-   -n 100 (maximum number of supporting reads analysis at a time, default 100) 
-
-```
-
-**Then run the step2 to merge the result of Case:**
-
-```
+   -o $outpath \              # Output path for your analysis (same as your control sample)
+   -j $subject_case \         # Subject ID of case sample
+   -m $yourdownloadpath \     # The path where you place RetroNet
+   -g hg38 \                  # Default hg38, supporting hg38 and b37
+   -p $slurm_cpu_partition \  # SLURM cpu partition
+   -i input_type \            # 1=sort.bam; 2=Cleaned BAM (excludes duplicates, supplementary alignment, secondary alignment)
+   -b $BAM_file \             # BAM file of the subject
+   -n 100                     # Maximum number of supporting reads analysis at a time, default 100
+````
+**Noted**: Please ensure you have finished all of `Singularity_Slurm_RetroNet_step1.sh` and `Singularity_Slurm_RetroNet_generate_control.sh`
+```bash
+### If you split multiple BAM for control
+### Your control will be subject_control=${subject_control}_Combined
 $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
-  
-   -o /directory_path_for_output \
-  
-   -j CaseID \
-  
-   -m $yourdownloadpath \
-  
-   -v 3 (version control for RetroSom, default 3) \
-  
-   -g hg38 (default hg38, supporting hg38, hg19 and b37) \
-  
-   -p your_slurm_partition_name \
-  
-   -c ControlID_Combined \
-  
-   -z "N" (gpu_partition name, default "N") \
-  
-   -x 0.99 ( probability cutoff default 0.99) \
-  
-   -l 1 (number of bam you split)
+   -o $outpath \              # Output path for your analysis (same as your control sample)
+   -j $subject_case \         # Subject ID of case sample
+   -m $yourdownloadpath \     # The path where you place RetroNet
+   -g hg38 \                  # Default hg38, supporting hg38 and b37
+   -p $slurm_cpu_partition \  # SLURM cpu partition
+   -c $subject_control \      # If you have multiple BAM file of control, please use
+   -z $slurm_gpu_partition \  # (Optional parameter) SLURM gpu partition if you have, default N
+   -x 0.95 \                  # Probability cutoff default 0.95  
+   -l $num_case_BAM           # number of case BAM you split
 ```
+## Expected Output 
 
-A folder called CaseID_NoModel will be generated, there will be three kinds of output, the probability for each MEI will be in CaseID_Combined/RetroNet; the bed files for detailed MEI information will be in CaseID_Combined/retro_v3; the result svg will be in CaseID_Combined/visual/
+- If you do no split `BAM` file of case sample:
+   - Detailed somatic MEIs infomation
+      - `$outpath/$subject_case/retro_v3/${subject_case}.LINE.bed`
+      - `$outpath/$subject_case/retro_v3/${subject_case}.ALU.bed`
+      - `$outpath/$subject_case/retro_v3/${subject_case}.SVA.bed`
+   - Prediction of `PNG` images pass probability `cutoff`
+      - `$outpath/$subject_case/RetroNet/LINE_Inspected_${subject_case}_cut0.95.txt`
+      - `$outpath/$subject_case/RetroNet/ALU_Inspected_${subject_case}_cut0.95.txt`
+      - `$outpath/$subject_case/RetroNet/SVA_Inspected_${subject_case}_cut0.95.txt`
+   - Plot `svg` images of somatic MEIs using `RetroVis`
+      - `$outpath/$subject_case/visual/`: somatic MEIs of `L1`, `Alu`, and `SVA`
+      
+- If you split your case `BAM` file, the output folder will be `subject_case=${subject_case}_Combined`
+# Demo
+This demo has been tested under the `Burgundy HPC` in City University of Hong Kong.
+Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1m0dMPHCzUgdrl_ZoJvPF5yBSYxdl-T3R/view?usp=drive_link)
+- Input `BAM` files: `Demo/normal.bam` and `Demo/tumour.bam`
+- Output folder: `Demo/normal` and `Demo/tumour`
+### 1. Analyze the normal tissue
+````bash
+# Initialize the input of normal tissue
+outpath=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/Demo
+subject_control=normal
+yourdownloadpath=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/RetroNet
+slurm_cpu_partition=tiny
+input_type=1
+BAM_file=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/Demo/normal.bam
+num_control_BAM=1
+# Run step1 for control
+$yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
+-o $outpath \
+-j $subject_control \
+-m $yourdownloadpath \
+-g hg38 \
+-p $slurm_cpu_partition \
+-i $input_type \
+-b $BAM_file \
+-n 100
+# Wait for step1 finish...
+$yourdownloadpath/Singularity_Slurm_RetroNet_generate_control.sh \
+-o $outpath \
+-j $subject_control \
+-m $yourdownloadpath \
+-g hg38 \
+-p $slurm_cpu_partition \
+-l $num_control_BAM
+````
+**Consumed time for normal tissue:**
+- `Singularity_Slurm_RetroNet_step1.sh` 6m12s
+- `Singularity_Slurm_RetroNet_generate_control.sh` 4s
+### 2. Analyze the tumour cell line
+````bash
+# Initialize the input of tumor sample
+outpath=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/Demo
+subject_case=tumour
+yourdownloadpath=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/RetroNet
+slurm_cpu_partition=tiny
+slurm_gpu_partition=N
+input_type=1
+BAM_file=/gpfs1/scratch/zhinanlin2/Demo_GitHub_RetroNet/Demo/tumour.bam
+num_case_BAM=1
+# Run step1 for tumor
+$yourdownloadpath/Singularity_Slurm_RetroNet_step1.sh \
+-o $outpath \
+-j $subject_case \
+-m $yourdownloadpath \
+-g hg38 \
+-p $slurm_cpu_partition \
+-i $input_type \
+-b $BAM_file \
+-n 100
+# Wait for step1 finish...
+$yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
+-o $outpath \
+-j $subject_case \
+-m $yourdownloadpath \
+-g hg38 \
+-p $slurm_cpu_partition \
+-c $subject_control \
+-z $slurm_gpu_partition \
+-x 0.95 \
+-l $num_case_BAM
+````
+**Consumed time for tumour cell:**
+- `Singularity_Slurm_RetroNet_step1.sh` 6m28s
+- `Singularity_Slurm_RetroNet_step2.sh` 2h47m30s
+# Example: Analysis of HG008 Cancer Cell Line
+Please see the [HG008_analyze_log.md](https://github.com/Czhuofu/RetroNet/blob/master/HG008_analyze_log.md)
+# Licence
+RetroNet is licensed under the MIT License, approved by the Open Source Initiative (OSI). This license allows users to use, copy, modify, and distribute the software, provided proper attribution is given to the authors. The full license text is available in the [LICENSE](https://github.com/Czhuofu/RetroNet/blob/master/LICENSE).
