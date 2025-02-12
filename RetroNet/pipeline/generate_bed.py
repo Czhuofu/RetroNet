@@ -132,6 +132,7 @@ with open(f'{outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp',"w") as file2
                         dire=" "
                     #if int(i[2]) < 16:
                     if not (is_position_in_bed(key[0],i[0],i[1],f'{masterpath}/1kgenome/{hg}_1kgenome/{TEclass}.1kgenome.{hg}.bed') or any(un in key[0] for un in ['Un','random','alt','GL'])):
+                        print(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 0 -p {outpath} -m {masterpath} -g {hg}")
                         os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 0 -p {outpath} -m {masterpath} -g {hg}")
                         plus_this_strand=0 if '+' not in i[-1] else i[-1].count('+')-1
                         minus_this_strand=0 if '-' not in i[-1] else i[-1].count('-')-1
@@ -147,7 +148,8 @@ with open(f'{outpath}/{sub}/retro_v{ver}/{sub}.{TEclass}.bed.temp',"w") as file2
                         dire=" "
                     #if int(i[2]) < 16:
                     if not (is_position_in_bed(key[0],i[0],i[1],f'{masterpath}/1kgenome/{hg}_1kgenome/{TEclass}.1kgenome.{hg}.bed') or any(un in key[0] for un in ['Un','random','alt','GL'])):
-                        os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 0 -p {outpath} -m {masterpath} -g {hg}")
+                        os.system(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 1 -p {outpath} -m {masterpath} -g {hg}")
+                        print(f"{masterpath}/visual/RetroVis.sh -i {sub} -t {TEclass} -f {TEfamily} -c {key[0]} -d {i[0]} -e {i[1]} -r {ver} -s 1 -p {outpath} -m {masterpath} -g {hg}")
                         plus_this_strand=0 if '+' not in i[-1] else i[-1].count('+')-1
                         minus_this_strand=0 if '-' not in i[-1] else i[-1].count('-')-1
                         this_strand=[i[0],i[1],i[2],i[3],i[4],dire,plus_this_strand,minus_this_strand,detect_sv(i[4],dire,plus_this_strand,minus_this_strand)]

@@ -56,15 +56,29 @@ for (( strand=0; strand<=1; strand++ ))
      done
 
 
+
+
 for (( c=startlib; c<=$readgroup; c++ ))
-     do
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_1/LINE/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_1/LINE/split-reads-anchor.txt
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_1/ALU/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_1/ALU/split-reads-anchor.txt
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_0/LINE/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_0/LINE/split-reads-anchor.txt
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_0/ALU/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_0/ALU/split-reads-anchor.txt
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_0/SVA/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_0/SVA/split-reads-anchor.txt
-       awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v$ver\_1/SVA/split-reads-anchor.txt | awk -v lib=$c '{split ($1, names, ":"); print names[1]":lib"lib"_"names[2]":"names[3]":"names[4]":"names[5]":"names[6]":"names[7]":"names[8]"\t"$2"\t"$3"\t"$4"\t"$5}' >> $outpath/$sub/retro_v$ver\_1/SVA/split-reads-anchor.txt
-     done
+do
+  for type in LINE ALU SVA
+  do
+    for strand in 0 1
+    do
+      awk '{if (!/^read/) print $0}' $outpath/$sub2$c/retro_v${ver}_$strand/$type/split-reads-anchor.txt | \
+      awk -v lib=$c '{
+        split($1, names, ":");
+        output = names[1]":lib"lib"_";
+        for (i = 2; i <= length(names); i++) {
+          output = output names[i];
+          if (i < length(names)) {
+            output = output ":";
+          }
+        }
+        print output "\t" $2 "\t" $3 "\t" $4 "\t" $5
+      }' >> $outpath/$sub/retro_v${ver}_$strand/$type/split-reads-anchor.txt
+    done
+  done
+done
 
 
 for (( c=startlib; c<=$readgroup; c++ ))
