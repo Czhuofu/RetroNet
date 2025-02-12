@@ -71,7 +71,7 @@ echo -e "SVA\t$masterpath/refTE/sequence/SVA.fa" >> $masterpath/refTE/TE_ALHS.be
 
 slurm_sc="-o %x.%A.output -e %x.%A.output -p $partition_name --mem=48gb --time=100:00:00"
 slurm_sc_parallel="-o %x.%A.output -e %x.%A.output -p $partition_name --ntasks=1 --cpus-per-task=4 --mem=64gb --time=100:00:00"
-slurm_mc="-o %x.%A.output -e %x.%A.output -p $partition_name --time=120:00:00 --ntasks=1 --cpus-per-task=10 --mem-per-cpu=16gb"
+slurm_mc="-o %x.%A.output -e %x.%A.output -p $partition_name --time=120:00:00 --ntasks=1 --cpus-per-task=10 --mem=160gb"
 tmppath=$outpath/$sub/temp
 
 ##################################
