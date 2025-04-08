@@ -147,7 +147,7 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
 
 # Demo
 This demo has been tested under the `Burgundy HPC` in City University of Hong Kong.
-Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1m0dMPHCzUgdrl_ZoJvPF5yBSYxdl-T3R/view?usp=drive_link)
+Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1oErysrV78xyxqi_0H9PtMRRjVWGLXVkN/view?usp=sharing)
 - Input `BAM` files: `Demo/normal.bam` and `Demo/tumour.bam`
 - Output folder: `Demo/normal` and `Demo/tumour`
 ### 1. Analyze the normal tissue
