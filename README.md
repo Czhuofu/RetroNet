@@ -250,7 +250,7 @@ We manually validated germline MEIs from 11 Illumina DNA WGS that were not recov
 
 - **Extended File 4**: Detailed visualization of **tumor somatic L1 insertions** in **HG008-T** [👉 View File](https://drive.google.com/file/d/1-CZgrNEfO88l8kr6kF74KE0ot83ei-XQ/view?usp=sharing)
 
-- **Extended File 5**: Summary of **tumor somatic L1 insertions** in HG008‑T and their detection status by **PALMER** or **xTea_long** [👉 View File](https://drive.google.com/file/d/1-CZgrNEfO88l8kr6kF74KE0ot83ei-XQ/view?usp=sharing)
+- **Extended File 5**: Summary of **tumor somatic L1 insertions** in HG008‑T and their detection status by **PALMER** or **xTea_long** [👉 View File](https://drive.google.com/file/d/1sxCzCEjxUk2F8b4kjsOSSGoGuTdDb9V2/view?usp=drive_link)
 
 - **Extended File 6**: **Tumor somatic *Alu* insertions** in HG008‑T detected by PALMER or xTea_long [👉 View File](https://drive.google.com/file/d/1GAEFjkO0ayvMEMAh0TN6hHauUmTxkuwu/view?usp=sharing)
 
