@@ -234,7 +234,7 @@ This part provides extended data files related to our manuscript, include manual
 
 We manually validated germline MEIs from 11 Illumina DNA WGS that were not recovered by **Pangenome xTea long** calls from PacBio HiFi data:
 
-📊 **Validation of labels:**
+- 📊 **Validation of labels:**
 <div align="center">
 <img src="https://raw.githubusercontent.com/RLin1998/user_file/2d6a1bbd39739ec25da8d9393547262019433d6a/summary_MEI_short_and_Pacbio.png" width="400">
 </div>
