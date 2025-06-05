@@ -1,3 +1,4 @@
+
 # Overview
 - [RetroNet](#1)
 - [System Requirements](#2)
@@ -5,6 +6,7 @@
 - [Usage](#4)
 - [Demo](#5)
 - [Analyze HG008 Cancer Cell](#6)
+- [Extended Data and Files](#7)
 <p id="1"></p>
 
 # RetroNet
@@ -147,7 +149,7 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
 
 # Demo
 This demo has been tested under the `Burgundy HPC` in City University of Hong Kong.
-Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1m0dMPHCzUgdrl_ZoJvPF5yBSYxdl-T3R/view?usp=drive_link)
+Please download the demo output, and input `BAM` files use this link: [Demo.tar.gz](https://drive.google.com/file/d/1oErysrV78xyxqi_0H9PtMRRjVWGLXVkN/view?usp=sharing)
 - Input `BAM` files: `Demo/normal.bam` and `Demo/tumour.bam`
 - Output folder: `Demo/normal` and `Demo/tumour`
 ### 1. Analyze the normal tissue
@@ -222,5 +224,47 @@ $yourdownloadpath/Singularity_Slurm_RetroNet_step2.sh \
 
 # Example: Analysis of HG008 Cancer Cell Line
 Please see the [HG008_analyze_log.md](https://github.com/Czhuofu/RetroNet/blob/master/HG008_analyze_log.md)
+<p id="7"></p>
+
+# Extended Data and Supplementary Materials
+
+This part provides extended data files related to our manuscript, include manual validations, visualizations, and raw calls of other tools (PALMER and xTea long). All files are publicly accessible and are intended to enhance transparency and reproducibility.
+
+### Validation of the true/false MEI labels in 11 subjects using PacBio HiFi sequencing and manual inspection (response to main concern 2 part 1)
+
+We manually validated germline MEIs from 11 Illumina DNA WGS that were not recovered by **Pangenome xTea long** calls from PacBio HiFi data:
+
+- 📊 **Validation of labels:**
+<div align="center">
+<img src="https://raw.githubusercontent.com/RLin1998/user_file/2d6a1bbd39739ec25da8d9393547262019433d6a/summary_MEI_short_and_Pacbio.png" width="400">
+</div>
+
+- **Extended File 1**: Manual check of LINE-1 germline insertions not identified by PacBio xTea_long [👉 View File](https://drive.google.com/file/d/1NPqNDS65UXYq3qETa2U8fkxAVQgdz3Ct/view?usp=sharing)
+
+- **Extended File 2**: Manual check of *Alu* germline insertions not identified by PacBio xTea_long [👉 View File](https://drive.google.com/file/d/1OTmkHFIbf8eypNMO7uLULvT6kcUfZdP1/view?usp=sharing)
+
+- **Extended File 3**: Manual check of SVA germline insertions not identified by PacBio xTea_long or the polymorphic SVA dataset [👉 View File](https://drive.google.com/file/d/1pzh1s4_Ee_ck-NgVgp5gJD-tiBVSwVR8/view?usp=sharing)
+
+---
+### Gold standard somatic L1, *Alu*, and SVA insertions in PacBio HiFi sequencing of the cancer cell line HG008-T (response to main concern 2 part 2, and minor concern 5)
+
+- **Extended File 4**: Detailed visualization of **tumor somatic L1 insertions** in **HG008-T** [👉 View File](https://drive.google.com/file/d/1-CZgrNEfO88l8kr6kF74KE0ot83ei-XQ/view?usp=sharing)
+
+- **Extended File 5**: Summary of **tumor somatic L1 insertions** in HG008‑T and their detection status by **PALMER** or **xTea_long** [👉 View File](https://drive.google.com/file/d/1sxCzCEjxUk2F8b4kjsOSSGoGuTdDb9V2/view?usp=drive_link)
+
+- **Extended File 6**: **Tumor somatic *Alu* insertions** in HG008‑T detected by PALMER or xTea_long [👉 View File](https://drive.google.com/file/d/1GAEFjkO0ayvMEMAh0TN6hHauUmTxkuwu/view?usp=sharing)
+
+- **Extended File 7**: **Tumor somatic SVA insertions** in HG008‑T detected by PALMER or xTea_long [👉 View File](https://drive.google.com/file/d/1dX8Boc_6eiWR6AxSuw2aXKYEZxpz4J5q/view?usp=sharing)
+
+### 14 insertions that had fewer supporting reads than the xTea threshold but were identified through manually reviewed matching RetroNet calls in cell-free DNA (response to provide RetroNet’s Performance on Degraded DNA Samples)
+
+- **Extended File 8**: Detailed visualization of patient DTB-205 **cfDNA somatic L1 insertions** identified by RetroNet with low mosaicism in the tumor [👉 View File](https://drive.google.com/file/d/1YJbWhk1fXZkVHtlTEFzjQxUymS4p9q4b/view?usp=sharing)
+
+---
+
+### 📂 Raw MEI calls from PALMER and xTea:
+
+- **LINE-1, *Alu*, and SVA insertions** in **HG008-T** and **HG008**, detected by **xTea_long** and **PALMER** [👉 View Folder](https://drive.google.com/drive/folders/1LJL7DCN2-GzOGHCTqxASpAxEyBnStO61?usp=sharing)
+
 # Licence
 RetroNet is licensed under the MIT License, approved by the Open Source Initiative (OSI). This license allows users to use, copy, modify, and distribute the software, provided proper attribution is given to the authors. The full license text is available in the [LICENSE](https://github.com/Czhuofu/RetroNet/blob/master/LICENSE).
