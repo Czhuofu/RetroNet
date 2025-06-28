@@ -40,9 +40,9 @@ Due to GitHub's file size limitations, some large files and folders are hosted o
 Please download them using the link provided below and place them in the appropriate locations. 
 For instance, after clone the `RetroNet` files, set the directory path as `$yourdownloadpath`
 
-- [RetroNet.sif](https://drive.google.com/file/d/1OUg-L2sQ7ucaNsTXolIus0uCT5VG29CC/view?usp=drive_link) : `mv RetroNet.sif $yourdownloadpath/pipeline/`
+- [RetroNet.sif](https://drive.google.com/file/d/1OUg-L2sQ7ucaNsTXolIus0uCT5VG29CC/view?usp=drive_link) : `mv RetroNet.sif $yourdownloadpath/RetroNet/pipeline/`
 - [hg38_100bp.bedGraph](https://drive.google.com/file/d/1IhiktWmqZSTcrPg2p9OIb5vtcQ5GLLjh/view?usp=sharing) : `mv hg38_100bp.bedGraph $yourdownloadpath/RetroNet/`
-- [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder `mv -r ./position $yourdownloadpath/refTE/`
+- [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder `mv ./position $yourdownloadpath/RetroNet/refTE/`
 - [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) **(Optional)** : If you need to analyse b37 bam files `mv b37_100bp.bedGraph $yourdownloadpath/RetroNet/`
 <br/>
 <br/>
