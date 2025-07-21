@@ -29,11 +29,12 @@ For instance, after clone the `RetroNet` files, set the directory path as `$your
 - [position](https://drive.google.com/drive/folders/1L-XxCCGRMnNShd7ysbeM2kFIxkQANI9D?usp=sharing) : This is a folder `mv ./position $yourdownloadpath/RetroNet/refTE/`
 - [b37_100bp.bedGraph](https://drive.google.com/file/d/14eOmzhz0pMYpfuLU5spLgwuZJv8_n75R/view?usp=drive_link) **(Optional)** : If you need to analyse b37 bam files `mv b37_100bp.bedGraph $yourdownloadpath/RetroNet/`
 
+**Download NA12878 filter and modified script**
 ```bash
 # Download NA12878 filter as control
 wget https://github.com/Czhuofu/RetroNet/raw/Germline-MEI-detection-with-RetroNet/NA12878_100X_hg38_filter2.tar.gz
 tar -zxvf NA12878_100X_hg38_filter2.tar.gz
-mv NA12878_100X_hg38_filter2 $yourdownloadpath
+mv NA12878_100X_hg38_filter2 $yourdownloadpath/RetroNet/
 
 # Replace a modified script
 wget https://github.com/Czhuofu/RetroNet/raw/Germline-MEI-detection-with-RetroNet/generate_bed.py
