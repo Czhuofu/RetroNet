@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 0) Path to Workfolder
-Workfolder=/home/zhinanlin/scratch
+Workfolder=$yourdownloadpath
 
 # 1) Run Step 1 for HG00096
 sub=HG00096

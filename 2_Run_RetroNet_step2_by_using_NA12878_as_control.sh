@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 0) Path to Workfolder
-Workfolder=/home/zhinanlin/scratch
+Workfolder=$yourdownloadpath
 
 # 1) Run Step 2 for HG00096 by using NA12878 as control
 sub=HG00096

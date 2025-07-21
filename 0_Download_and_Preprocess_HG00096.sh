@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# 0) Path to Workfolder
-Workfolder=/home/zhinanlin/scratch
+# 0) Path to Workfolder (Replace with your downlaod path)
+Workfolder=$yourdownloadpath
 
 # 1) Downlad HG00096 WGS from HGSVC
 cd ${Workfolder}
